@@ -4,6 +4,13 @@
 //
 
 ///////////
+// UART1 //
+///////////
+
+// enable USART1
+//#define NF_SERIAL_COMM_STM32_UART_USE_USART1 TRUE
+
+///////////
 // UART2 //
 ///////////
 
@@ -15,4 +22,4 @@
 ///////////
 
 // enable USART3
-#define NF_SERIAL_COMM_STM32_UART_USE_USART3 TRUE
+//#define NF_SERIAL_COMM_STM32_UART_USE_USART3 TRUE

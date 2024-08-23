@@ -8,7 +8,8 @@
 #include <hal_nf_community.h>
 #include <cmsis_os.h>
 
-#include <usbcfg.h>
+//#include <usbcfg.h>
+#include <serialcfg.h>
 #include <swo.h>
 #include <targetHAL.h>
 #include <WireProtocol_ReceiverThread.h>
@@ -59,18 +60,18 @@ int main(void)
 #endif
 
     //  Initializes a serial-over-USB CDC driver.
-    sduObjectInit(&SERIAL_DRIVER);
-    sduStart(&SERIAL_DRIVER, &serusbcfg);
+    // sduObjectInit(&SERIAL_DRIVER);
+    // sduStart(&SERIAL_DRIVER, &serusbcfg);
+sdStart(&SERIAL_DRIVER, NULL);
+//     // Activates the USB driver and then the USB bus pull-up on D+.
+//     // Note, a delay is inserted in order to not have to disconnect the cable after a reset.
+    // usbDisconnectBus(serusbcfg.usbp);
+    // chThdSleepMilliseconds(100);
+    // usbStart(serusbcfg.usbp, &usbcfg);
+    // usbConnectBus(serusbcfg.usbp);
 
-    // Activates the USB driver and then the USB bus pull-up on D+.
-    // Note, a delay is inserted in order to not have to disconnect the cable after a reset.
-    usbDisconnectBus(serusbcfg.usbp);
-    chThdSleepMilliseconds(100);
-    usbStart(serusbcfg.usbp, &usbcfg);
-    usbConnectBus(serusbcfg.usbp);
-
-    // create the receiver thread
-    osThreadCreate(osThread(ReceiverThread), NULL);
+     // create the receiver thread
+     osThreadCreate(osThread(ReceiverThread), NULL);
 
     // start kernel, after this main() will behave like a thread with priority osPriorityNormal
     osKernelStart();
@@ -84,9 +85,9 @@ int main(void)
     //  Normal main() thread
     while (true)
     {
-        palSetPad(GPIOD, GPIOD_LED3);
+        palSetPad(GPIOF, GPIOF_LED0);
         osDelay(500);
-        palClearPad(GPIOD, GPIOD_LED3);
+        palClearPad(GPIOF, GPIOF_LED0);
         osDelay(500);
     }
 }
